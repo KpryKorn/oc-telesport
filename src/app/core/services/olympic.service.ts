@@ -10,17 +10,17 @@ import { Olympic } from '../models/Olympic';
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
 
-  private olympics$ = new BehaviorSubject<Olympic | null>(null);
+  private olympics$ = new BehaviorSubject<Olympic[] | null>(null);
   private loading$ = new BehaviorSubject<boolean>(false);
   private error$ = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) {}
 
-  loadInitialData(): Observable<Olympic> {
+  loadInitialData(): Observable<Olympic[]> {
     this.loading$.next(true);
     this.error$.next(null);
 
-    return this.http.get<Olympic>(this.olympicUrl).pipe(
+    return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       tap((value) => {
         this.olympics$.next(value);
         this.loading$.next(false);
