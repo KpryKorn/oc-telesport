@@ -1,8 +1,6 @@
 .pie-chart-container {
   position: relative;
-  width: 100%;
-  background-color: #f9f9f9;
+  max-width: 100%;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

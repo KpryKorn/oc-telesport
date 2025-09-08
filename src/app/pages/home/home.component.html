@@ -1,12 +1,13 @@
 <h2>Olympic games app</h2>
+<p>
+  Retrouvez les détails des meilleurs pays ayant participés aux Jeux Olympiques,
+  classés par nombre de médailles obtenues
+</p>
 <hr />
-<ul *ngIf="olympics$ | async as olympics; else loading">
-  <li *ngFor="let olympic of olympics">
-    {{ olympic.id }} - {{ olympic.participations.length }} -
-    {{ olympic.country }} -
-    {{ getTotalMedalsByCountry(olympics, olympic.country) }} medals
-  </li>
-</ul>
+
+<div *ngIf="olympics$ | async as olympics; else loading">
+  <app-pie-chart [olympics]="olympics" [config]="chartConfig"> </app-pie-chart>
+</div>
 
 <ng-template #loading>
   <p>Loading...</p>
