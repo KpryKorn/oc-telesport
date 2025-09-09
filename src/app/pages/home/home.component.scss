@@ -1,3 +1,17 @@
 :host {
   text-align: center;
 }
+
+.intro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  & p {
+    padding-inline: 1rem;
+    padding-block: 8px;
+    background-color: rgb(142, 204, 255);
+    border-radius: 8px;
+  }
+}
