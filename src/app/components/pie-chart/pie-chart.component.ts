@@ -7,7 +7,9 @@ import {
   OnDestroy,
   OnChanges,
   SimpleChanges,
+  inject,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Chart, ChartConfiguration, ChartType, registerables } from 'chart.js';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { PieChartConfig } from 'src/app/core/models/PieChart';
@@ -22,6 +24,8 @@ Chart.register(...registerables);
 export class PieChartComponent implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('pieChart', { static: false })
   pieChart!: ElementRef<HTMLCanvasElement>;
+
+  router = inject(Router);
 
   @Input() olympics: Olympic[] = [];
   @Input() config: PieChartConfig = {};
@@ -106,6 +110,9 @@ export class PieChartComponent implements AfterViewInit, OnDestroy, OnChanges {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        onClick: (event, elements) => {
+          this.navigateOnClick(chartData[elements[0].index].country);
+        },
         plugins: {
           title: {
             display: !!finalConfig.title,
@@ -162,6 +169,13 @@ export class PieChartComponent implements AfterViewInit, OnDestroy, OnChanges {
           acc + curr.participations.reduce((sum, p) => sum + p.medalsCount, 0)
         );
       }, 0);
+  }
+
+  navigateOnClick(country: string) {
+    const olympic = this.olympics.find((o) => o.country === country);
+    if (olympic) {
+      this.router.navigate(['/details', olympic.id]);
+    }
   }
 
   ngOnDestroy(): void {
