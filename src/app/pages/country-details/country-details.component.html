@@ -7,5 +7,10 @@
     <p>Nombre total de médailles {{ totalMedals }}</p>
   </div>
 
+  <div *ngIf="countryData">
+    <app-line-chart [olympic]="countryData" [config]="lineChartConfig">
+    </app-line-chart>
+  </div>
+
   <a routerLink="/">Retourner au dashboard</a>
 </section>

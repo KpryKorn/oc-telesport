@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, of, Subscription } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
+import { LineChartConfig } from 'src/app/core/models/LineChart';
 
 @Component({
   selector: 'app-country-details',
@@ -17,6 +18,21 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
   public totalMedals: number = 0;
   public totalAthletes: number = 0;
   public countryName: string = '';
+  public countryData: Olympic | null = null;
+
+  public lineChartConfig: LineChartConfig = {
+    height: 500,
+    showLegend: true,
+    legendPosition: 'top',
+    xAxisTitle: 'Années',
+    yAxisTitle: 'Nombre de médailles',
+    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+    borderColor: 'rgba(75, 192, 192, 1)',
+    pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+    pointBorderColor: '#fff',
+    fill: true,
+    tension: 0.4,
+  };
 
   private olympicService = inject(OlympicService);
   private activatedRoute = inject(ActivatedRoute);
@@ -29,20 +45,29 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     this.susbscription = this.olympics$.subscribe((olympics) => {
       if (olympics && olympics.length > 0) {
         // les params renvoient un string => à convertir en number sinon undefined
-        const countryData = olympics.find(
+        const currentCountryData = olympics.find(
           (o) => o.id === Number(this.countryId)
         );
-        if (countryData) {
-          this.totalParticipations = countryData.participations.length;
-          this.totalMedals = countryData.participations[0].medalsCount;
-          this.totalAthletes = countryData.participations[0].athleteCount;
-          this.countryName = countryData.country;
+        if (currentCountryData) {
+          this.countryData = currentCountryData;
+          this.totalParticipations = currentCountryData.participations.length;
+          this.totalMedals = currentCountryData.participations.reduce(
+            (sum, participation) => sum + participation.medalsCount,
+            0
+          );
+          this.totalAthletes = currentCountryData.participations.reduce(
+            (sum, participation) => sum + participation.athleteCount,
+            0
+          );
+          this.countryName = currentCountryData.country;
         } else {
+          this.countryData = null;
           this.totalParticipations = 0;
           this.totalMedals = 0;
           this.totalAthletes = 0;
         }
       } else {
+        this.countryData = null;
         this.totalParticipations = 0;
         this.totalMedals = 0;
         this.totalAthletes = 0;
