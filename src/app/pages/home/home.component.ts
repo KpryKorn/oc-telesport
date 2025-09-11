@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, of, Subscription } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { PieChartConfig } from 'src/app/core/models/PieChart';
@@ -9,8 +9,9 @@ import { PieChartConfig } from 'src/app/core/models/PieChart';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   public olympics$: Observable<Olympic[] | null> = of(null);
+  subscription: Subscription = new Subscription();
 
   public totalCountries: number = 0;
   public totalEditions: number = 0;
@@ -26,10 +27,9 @@ export class HomeComponent implements OnInit {
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
-    this.olympicService.loadInitialData().subscribe();
     this.olympics$ = this.olympicService.getOlympics();
 
-    this.olympics$.subscribe((olympics) => {
+    this.subscription = this.olympics$.subscribe((olympics) => {
       if (olympics && olympics.length > 0) {
         const uniqueCountries = new Set(olympics.map((o) => o.country));
         this.totalCountries = uniqueCountries.size;
@@ -55,5 +55,10 @@ export class HomeComponent implements OnInit {
 
   getTotalNumberOfEditions(): number {
     return this.totalEditions;
+  }
+
+  // désabonnement du sub lors de la destruction du composant
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

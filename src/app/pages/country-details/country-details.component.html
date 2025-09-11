@@ -1,1 +1,11 @@
-<p>Affichage du pays avec l'id {{ countryId }}</p>
+<section>
+  <p id="country-name">{{ countryName }}</p>
+
+  <div>
+    <p>Nombre de participations {{ totalParticipations }}</p>
+    <p>Nombre d'athlètes envoyés aux JOs {{ totalAthletes }}</p>
+    <p>Nombre total de médailles {{ totalMedals }}</p>
+  </div>
+
+  <a routerLink="/">Retourner au dashboard</a>
+</section>
