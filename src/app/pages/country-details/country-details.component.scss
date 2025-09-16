@@ -1,0 +1,33 @@
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & p#country-name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  & div {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    & p {
+      padding-block: 0.5rem;
+      padding-inline: 1rem;
+      background-color: rgb(142, 204, 255);
+      border-radius: 0.5rem;
+    }
+  }
+
+  a {
+    margin-top: 1rem;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.3rem;
+    }
+  }
+}

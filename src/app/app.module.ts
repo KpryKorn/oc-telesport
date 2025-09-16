@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { CountryDetailsComponent } from './pages/country-details/country-details.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +15,8 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
     HomeComponent,
     NotFoundComponent,
     PieChartComponent,
+    CountryDetailsComponent,
+    LineChartComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],

@@ -111,7 +111,9 @@ export class PieChartComponent implements AfterViewInit, OnDestroy, OnChanges {
         responsive: true,
         maintainAspectRatio: false,
         onClick: (event, elements) => {
-          this.navigateOnClick(chartData[elements[0].index].country);
+          if (elements != undefined && elements.length > 0) {
+            this.navigateOnClick(chartData[elements[0].index].country);
+          }
         },
         plugins: {
           title: {
