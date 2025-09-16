@@ -12,18 +12,14 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Where to start
+## Architecture
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+This Angular app contains different folders :
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+- /src/app/pages/ : contains the pages of the app (home, country details, error page)
+- /src/app/core/ : contains the core of the app (models, services)
+- /src/app/components/ : contains the reusable components of the app
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+## How to create new components using the Angular CLI
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
-
-You're now ready to implement the requested features.
-
-Good luck!
+If you need to create components, models, services or anything, you can use the Angular CLI : `npx ng generate component <component-name>`

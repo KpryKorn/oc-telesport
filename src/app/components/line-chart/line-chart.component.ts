@@ -183,7 +183,7 @@ export class LineChartComponent implements AfterViewInit, OnDestroy, OnChanges {
         year: participation.year,
         medals: participation.medalsCount,
       }))
-      .sort((a, b) => a.year - b.year); // Trier par année croissante
+      .sort((a, b) => a.year - b.year); // trier par année croissante
   }
 
   ngOnDestroy(): void {
