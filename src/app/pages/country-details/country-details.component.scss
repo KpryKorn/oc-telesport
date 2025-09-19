@@ -31,3 +31,9 @@ section {
     }
   }
 }
+
+@media (max-width: 768px) {
+  .country-stats {
+    flex-direction: column;
+  }
+}
