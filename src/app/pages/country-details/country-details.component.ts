@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, of, Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of, Subscription, tap } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { LineChartConfig } from 'src/app/core/models/LineChart';
@@ -36,11 +36,17 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
 
   private olympicService = inject(OlympicService);
   private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
 
   countryId = this.activatedRoute.snapshot.params['id'];
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
+    this.olympics$ = this.olympicService.getOlympics().pipe(
+      tap((olympics) => {
+        if (!olympics || olympics.length === 0)
+          this.router.navigateByUrl('/not-found');
+      })
+    );
 
     this.susbscription = this.olympics$.subscribe((olympics) => {
       if (olympics && olympics.length > 0) {
@@ -61,6 +67,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
           );
           this.countryName = currentCountryData.country;
         } else {
+          this.router.navigateByUrl('/not-found');
           this.countryData = null;
           this.totalParticipations = 0;
           this.totalMedals = 0;
